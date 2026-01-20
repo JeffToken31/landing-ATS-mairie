@@ -8,9 +8,9 @@ const SUPPORTED_LOCALES = ["fr", "en"] as const;
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
@@ -18,9 +18,9 @@ export function generateStaticParams() {
 }
 
 type LocaleMetadataProps = {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({
@@ -28,6 +28,9 @@ export async function generateMetadata({
 }: LocaleMetadataProps): Promise<Metadata> {
   const { locale } = await params;
   const isEnglish = locale === "en";
+  const metadataBase = new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  );
 
   const title = isEnglish
     ? "ATS – Recruitment system project | Jeffrey Basset"
@@ -37,6 +40,7 @@ export async function generateMetadata({
     : "Projet ATS développé en stage : portail candidat, back-office RH et workflow de recrutement. Démonstration technique full-stack.";
 
   return {
+    metadataBase,
     title,
     description,
     robots: {

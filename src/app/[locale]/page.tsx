@@ -4,6 +4,7 @@ import { FeatureVideo } from "@/components/landing/FeatureVideo";
 import { Footer } from "@/components/landing/Footer";
 import { HeroVideo } from "@/components/landing/HeroVideo";
 import { Navbar } from "@/components/layout/Navbar";
+import { Suspense } from "react";
 import { TechDetails } from "@/components/landing/TechDetails";
 
 const SUPPORTED_LOCALES = ["fr", "en"] as const;
@@ -31,7 +32,9 @@ export default async function Home({ params }: PageProps) {
 
   return (
     <div className="premium-surface min-h-screen text-slate-900 dark:text-slate-100">
-      <Navbar />
+      <Suspense fallback={null}>
+        <Navbar />
+      </Suspense>
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6 lg:px-8">
         <HeroVideo
           title={hero.title}
